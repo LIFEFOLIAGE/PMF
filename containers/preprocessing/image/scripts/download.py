@@ -239,11 +239,9 @@ def getKeycloak() -> dict:
 		dict: local thread response with autorization token and refresh token + metadata
 	"""
 	# get account configuration
-	# username = os.getenv('COPERNICUS_DATASPACE_USERNAME')
-	# password = os.getenv('COPERNICUS_DATASPACE_PASSWORD')
-	username = "lifefoliage20@gmail.com"
-	password = "life20.MONITORAGGIO"
-
+	username = os.getenv('COPERNICUS_DATASPACE_USERNAME')
+	password = os.getenv('COPERNICUS_DATASPACE_PASSWORD')
+	
 	data = {
 		"client_id": "cdse-public",
 		"username": username,
