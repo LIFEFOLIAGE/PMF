@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  preprocessing:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    restart: on-failure
+    env_file:
+      - .env
+    volumes:
+     - type: bind 
+       source: /EOPStorage 
+       target: /foliage/data
+    ports:
+      - '8000:8000'

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Appenders>
+		<Routing name="Routing">
+			<Routes pattern="$${event:ThreadName}">
+				<Route>
+					<RollingFile name="Rolling-${event:ThreadName}" fileName="logs/dev/thread/${event:ThreadName}.log" filePattern="logs/dev/archive/$${date:yyyy-MM}/${event:ThreadName}-%d{dd}-%i.log.gz">
+						<PatternLayout pattern="%d [%-5p] [%c{1}] [%M] - %m%n"/>
+						<Policies>
+							<OnStartupTriggeringPolicy />
+							<SizeBasedTriggeringPolicy size="20 MB" />
+							<TimeBasedTriggeringPolicy />
+						</Policies>
+						<DefaultRolloverStrategy>
+							<Delete basePath="log" maxDepth="2">
+								<IfFileName glob="*/*.log.gz" />
+								<IfLastModified age="120d" />
+							</Delete>
+						</DefaultRolloverStrategy>
+					</RollingFile>
+				</Route>
+			</Routes>
+		</Routing>
+
+
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d %p %C{1.} [%tid-%t]: %m%n" />
+		</Console>
+
+
+		<RollingFile name="RollingFile" fileName="logs/dev/foliageMonitoraggio.log" filePattern="logs/dev/archive/$${date:yyyy-MM}/foliageMonitoraggio-%d{dd}-%i.log.gz">
+			<PatternLayout>
+				<pattern>%d %p %C{1.} [%tid-%t] %m%n</pattern>
+			</PatternLayout>
+			<Policies>
+				<OnStartupTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="20 MB" />
+				<TimeBasedTriggeringPolicy />
+			</Policies>
+			<DefaultRolloverStrategy>
+				<Delete basePath="log" maxDepth="2">
+					<IfFileName glob="*/*.log.gz" />
+					<IfLastModified age="120d" />
+				</Delete>
+			</DefaultRolloverStrategy>
+		</RollingFile>
+	</Appenders>
+
+	<Loggers>
+		<!-- LOG everything at INFO level -->
+		<Root level="info">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="RollingFile" />
+			<AppenderRef ref="Routing" />
+		</Root>
+
+		<Logger name="it.almaviva" level="debug"></Logger>
+		<Logger name="org.springframework.jdbc.core.JdbcTemplate" level="error"></Logger>
+		<Logger name="org.springframework.jdbc.core" level="error"></Logger>
+		<Logger name="org.hibernate.cfg" level="error"></Logger>
+		<Logger name="com.zaxxer.hikari" level="error"></Logger>
+	</Loggers>
+
+</Configuration>

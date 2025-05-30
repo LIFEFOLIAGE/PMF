@@ -1,0 +1,25 @@
+services:
+  preprocess:
+    image: feop-a-preprocessing
+    restart: always
+    ports:
+     - 8000:8000
+    env_file:
+      - preprocessing/.env
+    volumes:
+     - type: bind 
+       source: /EOPStorage/data
+       target: /foliage/data
+      
+  monitor:
+    image: feop-c-monitoring
+    restart: always
+    ports:
+     - 8001:8000
+    volumes:
+     - type: bind 
+       source: /EOPStorage/data
+       target: /foliage/data
+     - type: bind
+       source: /EOPStorage/monitoring-tmp
+       target: /tmp
