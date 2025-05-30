@@ -12,6 +12,7 @@ Qui di seguito sono riportati i software necessari per procedere con l’install
 
 *	Wget: client per download da rete
 *	Unzip: gestore di archivi
+*	7zip: gestore di archivi
 *	Java openJdk21: piattaforma di sviluppo per il linguaggio java
 *	Maven: gestore di pacchetti per il linguaggio java
 *	Docker: software di containerizzazione
@@ -22,6 +23,7 @@ Qui di seguito sono riportati i software necessari per procedere con l’install
 ```bash
 sudo apt install wget
 sudo apt install unzip
+sudo apt install p7zip-full
 sudo apt install openjdk-21-jdk
 sudo apt install maven
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
@@ -43,11 +45,13 @@ unzip main.zip
 
 ## <a id="createDockerImages">Generazione delle immagini docker
 
-Una volta scaricato il progetto si può procedere alla generazione delle immagini per i container docker che si occuperanno di gestire le fasi di preprocessing e monitoring.
+Una volta scaricato il progetto si può procedere alla generazione delle immagini per i container docker che si occuperanno di gestire le fasi di preprocessing e monitoring. Prima di produrre l'immagine per il monitoring occorre estrarre i file compressi con la maschera boschi.
 
 ```bash
-cd /EOPSoftware/EOP-main/containers/preprocessing/image
+cd /EOPSoftware/EOP-main/containers/preprocessing/image/
 sudo docker build --no-cache -t feop-a-preprocessing .
+cd /EOPSoftware/EOP-main/containers/monitoring/image/dati_aggiuntivi
+7z x STC_forest_mask_*.7z
 cd /EOPSoftware/EOP-main/containers/monitoring/image
 sudo docker build --no-cache -t feop-c-monitoring .
 ```
