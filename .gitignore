@@ -26,3 +26,4 @@ replay_pid*
 .vscode
 **/.vs
 /containers/monitoring/image/dati_aggiuntivi/STC_forest_mask_10.tif
+/java/foliagePmfBatch/dati/*
